@@ -1,0 +1,12 @@
+# Simulated data is reproducible from the config: `make simulate`
+data/
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+.DS_Store

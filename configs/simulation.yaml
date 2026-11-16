@@ -1,0 +1,60 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Simulation assumptions. Every number here is a choice about how the world
+# works; the analysis on Day 2-3 has to RECOVER the effects without seeing them.
+# ─────────────────────────────────────────────────────────────────────────────
+seed: 7
+
+customers:
+  n: 100000
+  age_bands: {"18-34": 0.35, "35-54": 0.40, "55+": 0.25}
+  # Digital confidence (latent): how sure-footed someone is with banking apps.
+  # Assumption: lower on average for 55+, wide spread in every age band.
+  digital_confidence_mean: {"18-34": 0.3, "35-54": 0.0, "55+": -0.5}
+  payments_per_week_median: 3.0
+  pre_period_weeks: 8          # history available before the test (used for CUPED on Day 2)
+
+experiment:
+  weeks: 4
+  salt: "scam-warning-v1"     # hash salt for randomisation
+  treatment_share: 0.5
+
+payments:
+  genuine_amount_median: 60
+  genuine_amount_sigma: 1.0
+  new_payee_share_beta: [2, 8]  # per-customer share of payments to new payees
+
+scams:
+  # Per-payment chance of a scam: logistic in customer vulnerability and new payee
+  base_logit: -8.6
+  vulnerability_weight: 0.6     # vulnerability = -digital_confidence + noise
+  new_payee_weight: 2.2
+  # Which scam a victim meets depends on age (purchase scams skew young,
+  # impersonation and investment scams skew older)
+  type_mix:
+    "18-34": {purchase: 0.70, impersonation: 0.20, investment: 0.10}
+    "35-54": {purchase: 0.50, impersonation: 0.30, investment: 0.20}
+    "55+":   {purchase: 0.25, impersonation: 0.45, investment: 0.30}
+  amount_median: {purchase: 250, impersonation: 1800, investment: 4500}
+  amount_sigma: 0.8
+
+risk_model:
+  # The bank's existing payment-risk score (e.g. a model like fraud-detection-fintech).
+  # Payments above the threshold are "flagged" and eligible for a warning.
+  scam_signal: 1.8
+  new_payee_signal: 0.8
+  amount_signal: 0.35
+  noise_sd: 1.5              # tuned so AUC ~0.94 and ~70% of scams get flagged
+  flag_rate: 0.05              # threshold set so ~5% of payments are flagged
+
+warning:
+  # TRUE effect of the warning, by scam type. The point of the project is to
+  # estimate these from data without being told.
+  stop_rate: {purchase: 0.25, impersonation: 0.40, investment: 0.10}
+  confidence_effect: 0.5       # more digitally confident customers heed warnings more
+  genuine_abandon_rate: 0.03   # genuine payers who give up when warned
+  genuine_abandon_confidence_effect: -0.3  # confident users abandon less
+  support_contact_rate: {genuine: 0.02, scam_stopped: 0.30, scam_completed: 0.0}
+
+output:
+  data_dir: data
+  reports_dir: reports
