@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Pre-registered analysis plan. Written BEFORE looking at the results: choosing
+# the metric, the covariates or the guardrail limits afterwards would let us
+# pick whichever version looks best.
+# ─────────────────────────────────────────────────────────────────────────────
+alpha: 0.05
+power: 0.80
+
+primary_metric: scam_loss          # £ lost to scams per customer during the test
+primary_population: triggered      # customers with >= 1 flagged payment (see docs/day2_ab_test.md)
+
+# Pre-period covariates for CUPED: known before the test started, so the
+# warning cannot have changed them
+cuped_covariates: [pre_payments, pre_new_payees, pre_spend, tenure_months]
+
+# Shown for comparison only: capping big losses cuts noise but biases the £ estimate
+winsor_quantile: 0.995
+
+# Guardrails: the warning must not cost genuine customers more than this.
+# Pass = the one-sided 95% upper bound is below the limit.
+guardrails:
+  abandoned_per_warned_genuine_payment: 0.05   # at most 5% of warned genuine payments abandoned
+  support_contacts_per_warned_payment: 0.05    # at most 5 support contacts per 100 warnings
+
+# Effect size worth detecting when sizing the test
+power_relative_mde: [0.10, 0.15, 0.20]
+
+peeking:
+  permutations: 2000               # A/A re-randomisations of the real customers
+  weekly_looks: 4
+  seed: 11

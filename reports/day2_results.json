@@ -1,0 +1,239 @@
+{
+  "trust": {
+    "n_treatment": 49957,
+    "n_control": 50043,
+    "srm_p": 0.785655944732163,
+    "balance_p": {
+      "pre_payments": 0.5772265139307999,
+      "pre_new_payees": 0.957005425530042,
+      "pre_spend": 0.9869907835465284,
+      "tenure_months": 0.5786490961313608
+    },
+    "trigger_share": 0.46479,
+    "trigger_share_by_arm": {
+      "control": 0.4639609935455508,
+      "treatment": 0.4656204335728727
+    }
+  },
+  "primary": [
+    {
+      "method": "1. Plain difference in means (all customers)",
+      "effect": -3.0751416003907295,
+      "se": 2.7397396915817804,
+      "ci_low": -8.444932722905895,
+      "ci_high": 2.294649522124436,
+      "p_value": 0.261683443118898,
+      "n_treatment": 49957,
+      "n_control": 50043,
+      "control_mean": 21.348035689307196,
+      "relative": -0.14404798854308673,
+      "variance_reduction_vs_plain": 0.0
+    },
+    {
+      "method": "2. CUPED (all customers)",
+      "effect": -3.1004628380283084,
+      "se": 2.7355803499544575,
+      "ci_low": -8.462101800754523,
+      "ci_high": 2.261176124697906,
+      "p_value": 0.2570530549638762,
+      "n_treatment": 49957,
+      "n_control": 50043,
+      "control_mean": 21.348035689307196,
+      "relative": -0.1452341041185943,
+      "variance_reduction_vs_plain": 0.003033999458732395
+    },
+    {
+      "method": "3. Triggered customers only (pre-registered)",
+      "effect": -1.6815969298025184,
+      "se": 2.492745224505809,
+      "ci_low": -6.567287792468115,
+      "ci_high": 3.2040939328630778,
+      "p_value": 0.4999322271336327,
+      "n_treatment": 23261,
+      "n_control": 23218,
+      "control_mean": 18.57131002875355,
+      "relative": -0.09054810496399764,
+      "variance_reduction_vs_plain": 0.1721775828877662
+    },
+    {
+      "method": "4. Triggered + CUPED",
+      "effect": -1.6582988030950732,
+      "se": 2.489322694386592,
+      "ci_low": -6.537281629991002,
+      "ci_high": 3.220684023800855,
+      "p_value": 0.5053058596449134,
+      "n_treatment": 23261,
+      "n_control": 23218,
+      "control_mean": 18.57131002875355,
+      "relative": -0.08929358244127988,
+      "variance_reduction_vs_plain": 0.1744492166745486
+    },
+    {
+      "method": "5. Loss on flagged payments only",
+      "effect": -2.1562828505147955,
+      "se": 2.342067448040363,
+      "ci_low": -6.746650698037541,
+      "ci_high": 2.4340849970079503,
+      "p_value": 0.3572201539272568,
+      "n_treatment": 49957,
+      "n_control": 50043,
+      "control_mean": 16.257181823631676,
+      "relative": -0.1326357097993695,
+      "variance_reduction_vs_plain": 0.26923087050390015
+    },
+    {
+      "method": "6. As 5, losses capped at \u00a321,399 (biased)",
+      "effect": -1.9026569188438582,
+      "se": 2.24378758640418,
+      "ci_low": -6.300399777154106,
+      "ci_high": 2.4950859394663896,
+      "p_value": 0.3964565749025515,
+      "n_treatment": 49957,
+      "n_control": 50043,
+      "control_mean": 15.931410526946827,
+      "relative": -0.11942802651564667,
+      "variance_reduction_vs_plain": 0.3292744058162276
+    }
+  ],
+  "secondary": {
+    "method": "Scams completed per customer",
+    "effect": -0.0013855874247804597,
+    "se": 0.0005840639276049915,
+    "ci_low": -0.0025303316875552526,
+    "ci_high": -0.00024084316200566683,
+    "p_value": 0.0176767010446889,
+    "n_treatment": 49957,
+    "n_control": 50043,
+    "control_mean": 0.009072197909797575,
+    "relative": -0.15272896805790429
+  },
+  "guardrails": {
+    "abandoned_per_warned_genuine_payment": {
+      "estimate": 0.030960274203517445,
+      "upper_95": 0.03246554794661661,
+      "limit": 0.05,
+      "pass": true
+    },
+    "support_contacts_per_warned_payment": {
+      "estimate": 0.020129743575465656,
+      "upper_95": 0.021344354604052772,
+      "limit": 0.05,
+      "pass": true
+    }
+  },
+  "power": [
+    {
+      "metric": "Scam \u00a3 lost, all customers",
+      "baseline": 21.348035689307196,
+      "sd": 480.98916062376156,
+      "mde_relative_now": 0.3990474462250641,
+      "n_per_arm_10pct": 796879.0488103838,
+      "weeks_10pct": 63.69554573549817,
+      "n_per_arm_15pct": 354168.46613794833,
+      "weeks_15pct": 28.309131437999188,
+      "n_per_arm_20pct": 199219.76220259594,
+      "weeks_20pct": 15.923886433874543
+    },
+    {
+      "metric": "Scam \u00a3 lost on flagged payments",
+      "baseline": 21.348035689307196,
+      "sd": 394.9961881778026,
+      "mde_relative_now": 0.3277043082562976,
+      "n_per_arm_10pct": 537412.3457373865,
+      "weeks_10pct": 42.95604545989541,
+      "n_per_arm_15pct": 238849.93143883842,
+      "weeks_15pct": 19.091575759953514,
+      "n_per_arm_20pct": 134353.08643434662,
+      "weeks_20pct": 10.739011364973852
+    },
+    {
+      "metric": "Scams completed (count)",
+      "baseline": 0.009072197909797575,
+      "sd": 0.09607221945517945,
+      "mde_relative_now": 0.18755665327814539,
+      "n_per_arm_10pct": 176038.7541867045,
+      "weeks_10pct": 14.070999275559378,
+      "n_per_arm_15pct": 78239.44630520199,
+      "weeks_15pct": 6.253777455804167,
+      "n_per_arm_20pct": 44009.68854667612,
+      "weeks_20pct": 3.5177498188898446
+    }
+  ],
+  "peeking": {
+    "once": 0.0505,
+    "weekly": 0.1245,
+    "daily": 0.2755,
+    "obf_weekly": 0.052,
+    "permutations": 2000,
+    "weekly_look_days": [
+      7,
+      14,
+      21,
+      28
+    ],
+    "obf_boundaries": [
+      4.048,
+      2.862,
+      2.337,
+      2.024
+    ],
+    "median_day_of_false_stop": 6.0
+  },
+  "grading": {
+    "true_effect_per_customer": -2.8038896,
+    "true_count_effect_per_customer": -0.00138,
+    "true_abandon_rate": 0.031290871503508795,
+    "true_contact_rate": 0.020412146900532613,
+    "rows": [
+      {
+        "method": "1. Plain difference in means (all customers)",
+        "estimate": -3.0751416003907295,
+        "truth": -2.8038896,
+        "covers_truth": true,
+        "error": -0.2712520003907293
+      },
+      {
+        "method": "2. CUPED (all customers)",
+        "estimate": -3.1004628380283084,
+        "truth": -2.8038896,
+        "covers_truth": true,
+        "error": -0.29657323802830815
+      },
+      {
+        "method": "3. Triggered customers only (pre-registered)",
+        "estimate": -1.6815969298025184,
+        "truth": -2.8038896,
+        "covers_truth": 1.0,
+        "error": 1.1222926701974818
+      },
+      {
+        "method": "4. Triggered + CUPED",
+        "estimate": -1.6582988030950732,
+        "truth": -2.8038896,
+        "covers_truth": 1.0,
+        "error": 1.145590796904927
+      },
+      {
+        "method": "5. Loss on flagged payments only",
+        "estimate": -2.1562828505147955,
+        "truth": -2.8038896,
+        "covers_truth": true,
+        "error": 0.6476067494852047
+      },
+      {
+        "method": "6. As 5, losses capped at \u00a321,399 (biased)",
+        "estimate": -1.9026569188438582,
+        "truth": -2.8038896,
+        "covers_truth": true,
+        "error": 0.901232681156142
+      },
+      {
+        "method": "Scams completed per customer",
+        "estimate": -0.0013855874247804597,
+        "truth": -0.00138,
+        "covers_truth": true,
+        "error": -5.587424780459762e-06
+      }
+    ]
+  }
+}

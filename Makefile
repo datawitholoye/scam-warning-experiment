@@ -1,4 +1,4 @@
-.PHONY: install simulate test lint
+.PHONY: install simulate analyse test lint
 
 install:        ## install everything into the active virtual environment
 	pip install -r requirements-dev.txt && pip install -e .
@@ -11,3 +11,6 @@ test:
 
 lint:
 	ruff check .
+
+analyse:        ## Day 2: A/B readout -> reports/day2_ab_test.md (~10 s)
+	python -m scam_experiment.analysis
